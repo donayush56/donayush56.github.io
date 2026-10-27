@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DONA YUSH Gallery</title>
+    <style>
+        :root {
+            --primary-pink: #ffb7c5;
+            --dark-pink: #ff8da1;
+            --soft-bg: #fff5f6;
+            --text-color: #4a3b32;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--soft-bg);
+            color: var(--text-color);
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 4px 15px rgba(255, 141, 161, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 24px rgba(255, 183, 197, 0.15);
+            border: 1px solid rgba(255, 183, 197, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 20px;
+            border-bottom: 2px dashed var(--primary-pink);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Forms styling */
+        .upload-box, .diary-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"], textarea, input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--primary-pink);
+            border-radius: 12px;
+            background-color: var(--soft-bg);
+            color: var(--text-color);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--dark-pink);
+            box-shadow: 0 0 8px rgba(255, 141, 161, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--dark-pink), var(--primary-pink));
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            align-self: flex-start;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Media Grid Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .media-item {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 183, 197, 0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .media-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .download-btn {
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            background: var(--soft-bg);
+            color: var(--dark-pink);
+            border: 1px solid var(--primary-pink);
+            padding: 8px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            background: var(--dark-pink);
+            color: var(--white);
+        }
+
+        /* Diary Entries Spacing */
+        .diary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Specific spacious gap between entries */
+            margin-top: 20px;
+        }
+
+        .diary-entry {
+            background: var(--soft-bg);
+            padding: 20px;
+            border-radius: 16px;
+            border-left: 5px solid var(--dark-pink);
+            position: relative;
+        }
+
+        .diary-date {
+            font-size: 0.85rem;
+            color: #887366;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .diary-content {
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .empty-text {
+            color: #aaa;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>DONA YUSH Gallery</h1>
+        <p>Your forever safe space for beautiful memories and private thoughts ✨</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Gallery Section -->
+        <div class="section-card">
+            <h2 class="section-title">🌸 Photo & Video Gallery</h2>
+            <div class="upload-box">
+                <input type="file" id="mediaInput" accept="image/*,video/*">
+                <button onclick="uploadMedia()">Upload Memory</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Media items will appear here -->
+            </div>
+        </div>
+
+        <!-- Diary Section -->
+        <div class="section-card">
+            <h2 class="section-title">📖 My Private Diary</h2>
+            <div class="diary-box">
+                <textarea id="diaryInput" placeholder="Write down your thoughts, secrets, or day updates here..."></textarea>
+                <button onclick="saveDiaryEntry()">Save Entry</button>
+            </div>
+            <div class="diary-list" id="diaryList">
+                <!-- Diary entries will appear here with specific spacing -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Use IndexedDB to allow storage of large files (images/videos) so they are never lost
+        let db;
+        const request = indexedDB.open("DonaYushDB", 1);
+
+        request.onupgradeneeded = function(e) {
+            db = e.target.result;
+            if (!db.objectStoreNames.contains("media")) {
+                db.createObjectStore("media", { autoIncrement: true });
+            }
+            if (!db.objectStoreNames.contains("diary")) {
+                db.createObjectStore("diary", { autoIncrement: true });
+            }
+        };
+
+        request.onsuccess = function(e) {
+            db = e.target.result;
+            loadGallery();
+            loadDiary();
+        };
+
+        request.onerror = function() {
+            alert("Database failed to open. Please allow storage permissions.");
+        };
+
+        // --- Gallery Logic ---
+        function uploadMedia() {
+            const fileInput = document.getElementById('mediaInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert("Please select a photo or video first!");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const transaction = db.transaction(["media"], "readwrite");
+                const store = transaction.objectStore("media");
+                
+                const mediaRecord = {
+                    name: file.name,
+                    type: file.type,
+                    data: event.target.result,
+                    date: new Date().toLocaleDateString()
+                };
+
+                store.add(mediaRecord);
+                transaction.oncomplete = function() {
+                    fileInput.value = '';
+                    loadGallery();
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+            
+            const transaction = db.transaction(["media"], "readonly");
+            const store = transaction.objectStore("media");
+            let hasItems = false;
+
+            store.openCursor().onsuccess = function(event) {
+                const cursor = event.target.result;
+                if (cursor) {
+                    hasItems = true;
+                    const item = cursor.value;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'media-item';
+
+                    let mediaElement;
+                    if (item.type.startsWith('video/')) {
+                        mediaElement = document.createElement('video');
+                        mediaElement.controls = true;
+                    } else {
+                        mediaElement = document.createElement('img');
+                    }
+                    mediaElement.src = item.data;
+
+                    const info = document.createElement('div');
+                    info.className = 'media-info';
